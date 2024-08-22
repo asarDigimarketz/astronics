@@ -1,0 +1,19 @@
+a {
+  text-decoration: none !important;
+}
+.cat-dropdown {
+  z-index: 999;
+}
+.register-btn {
+  background: linear-gradient(137.48deg, #f5434f, #631e29, #000000, #161a25);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+.register-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(137.48deg, #631e29, #f5434f, #000000, #161a25);
+}

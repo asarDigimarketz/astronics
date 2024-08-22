@@ -1,0 +1,197 @@
+:root {
+  --primary-color: rgb(148, 0, 0);
+  --black: #000;
+  --white: #fff;
+  --swiper-navigation-size: 24px; /* Adjust size as needed */
+}
+
+.container {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#collection {
+  margin-top: 65px;
+}
+
+.category-title {
+  text-align: center;
+}
+
+.category-title h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--white);
+  display: inline-block;
+  padding-bottom: 10px;
+  position: relative;
+}
+/* 
+.category-title h2::before {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background-color: var(--primary-color);
+  margin: 0 auto 15px;
+} */
+
+.swiper-container {
+  padding-bottom: 30px; /* Space at the bottom */
+  position: relative; /* Positioning context for arrows */
+}
+
+.swiper-slide {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Ensure spacing between image and content */
+}
+
+.content img {
+  width: 100%;
+  height: 300px; /* Adjust height as needed */
+  object-fit: cover;
+}
+
+.content {
+  text-align: center;
+  padding: 10px;
+}
+
+.img-content {
+  background: none; /* Remove background */
+  color: var(--white);
+  text-align: center;
+}
+
+.img-content p {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.img-content button {
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 140px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.img-content a {
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: 0.3s;
+}
+/* 
+.img-content button:hover a {
+  background: var(--white);
+  color: var(--primary-color) !important;
+} */
+.img-content button:hover {
+  background: rgb(148, 0, 0);
+  box-shadow: 0 0 30px 5px rgba(236, 0, 90, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.img-content button:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+.img-content button::before {
+  content: "";
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+.img-content button :active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  background-color: rgba(0, 0, 0, 0.7); /* Dark background */
+  color: var(--white); /* Arrow color */
+  width: var(--swiper-navigation-size);
+  height: var(--swiper-navigation-size);
+  border-radius: 50%;
+  border-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 43%;
+  transform: translateY(-50%);
+  z-index: 10; /* Ensure arrows are above other content */
+  font-size: 2.5rem; /* Adjust arrow size */
+}
+
+.swiper-button-prev {
+  left: 10px; /* Adjust distance from the left */
+}
+
+.swiper-button-next {
+  right: 10px; /* Adjust distance from the right */
+}
+
+.swiper-button-prev::before,
+.swiper-button-next::before {
+  font-size: var(--swiper-navigation-size);
+  color: var(--white); /* Arrow color */
+}
+
+@media (max-width: 768px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 40px; /* Adjust size for smaller screens */
+    height: 40px; /* Adjust size for smaller screens */
+    font-size: 1.2rem; /* Adjust arrow size for smaller screens */
+  }
+}

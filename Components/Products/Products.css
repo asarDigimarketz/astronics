@@ -1,0 +1,131 @@
+/* Container */
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem; /* Add padding to the container for better spacing */
+}
+
+/* Grid setup for different screen sizes */
+.grid-custom {
+  grid-template-columns: 1fr; /* Default to 1 card per row for small screens */
+  gap: 1rem; /* Add gap between grid items */
+}
+
+@media (min-width: 457px) and (max-width: 767px) {
+  .grid-custom {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid-custom {
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-custom {
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  }
+}
+
+/* Center card alignment for very small screens */
+@media (max-width: 457px) {
+  .grid-custom {
+    grid-template-columns: 1fr;
+    justify-items: center; /* Center cards */
+  }
+
+  .bg-gray-100 {
+    max-width: 20rem; /* Limit card width */
+  }
+}
+/* Card */
+.bg-gray-100 {
+  background-color: #f8f8f8; /* Slightly lighter background for cards */
+  border: 1px solid #e0e0e0; /* Subtle border around cards */
+}
+
+/* Card Title */
+h5 {
+  font-family: "Roboto", sans-serif; /* Consistent font family for better readability */
+}
+
+/* Card Button */
+.contactbtn {
+  position: relative;
+  padding: 12px 24px;
+  border: 2px solid rgb(255, 61, 103);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: rgb(148, 0, 0);
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  transition: all 0.2s ease-in;
+}
+
+.contactbtn:hover {
+  background: rgb(148, 0, 0);
+  box-shadow: 0 0 15px 5px rgba(236, 0, 90, 0.815);
+  transition: all 0.2s ease-out;
+}
+
+.contactbtn::before {
+  content: "";
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 15px 30px #fff;
+  transform: skewX(-20deg);
+  transition: all 0.5s linear;
+}
+
+.contactbtn:hover::before {
+  animation: sh02 0.5s linear;
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+/* PDF Annotations */
+.pdf-annotations {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Product Description */
+.product-description ul {
+  list-style-type: disc;
+  padding-left: 1rem;
+  margin-top: 0.8rem;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  color: #333; /* Darker text color for better readability */
+}
+.contactbtn:focus {
+  outline: 2px solid rgb(255, 61, 103);
+  outline-offset: 2px;
+}
+.bg-gray-100:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

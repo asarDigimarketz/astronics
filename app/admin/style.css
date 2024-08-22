@@ -1,0 +1,17 @@
+.antialiased,
+footer {
+  display: none;
+}
+.adminLayout {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+}
+.mainContent {
+  flex: 1; /* Takes up remaining space */
+  padding: 1rem;
+  background-color: #f8f9fa; /* Light background color */
+  overflow-y: auto; /* Allows for vertical scrolling */
+}
+a.a-style {
+  color: #fff !important;
+}

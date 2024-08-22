@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles/globals.css */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative; /* Ensure body acts as a reference point for positioning */
+}
+
+body::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: url("../public/assets/gif/noise.gif");
+  z-index: -1;
+  background-color: rebeccapurple;
+  opacity: 0.05;
+}
+
+.bg-color--1 {
+  background: #24243557 !important;
+}
+
+body.template-color-1 {
+  background-color: #191925 !important;
+}
+
+.carousel {
+  width: 100%;
+  flex: 1; /* Allow carousel to grow and shrink to fill available space */
+  position: relative; /* Keep it within the normal document flow */
+  z-index: -1;
+  height: 90dvh;
+  overflow: hidden; /* Prevent overflow from images */
+}
+
+.mySwiper {
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  z-index: -1;
+}
+
+.footerset {
+  margin-top: auto;
+  z-index: 10; /* Ensure footer is above the carousel */
+  padding: 20px; /* Some padding for better visual appeal */
+}

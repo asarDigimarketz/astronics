@@ -1,0 +1,20 @@
+/* Adjust the font size of titles responsively */
+.slidertitle h3 {
+  font-size: 15px; /* Base font size */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+  display: block; /* Ensure block-level display for styling */
+}
+
+@media (max-width: 768px) {
+  .slidertitle h3 {
+    font-size: 13px; /* Adjust font size for tablets and larger phones */
+  }
+}
+
+@media (max-width: 480px) {
+  .slidertitle h3 {
+    font-size: 11px; /* Adjust font size for mobile devices */
+  }
+}

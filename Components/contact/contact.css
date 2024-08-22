@@ -1,0 +1,239 @@
+/* ContactForm.css */
+
+.contact-form-container {
+  position: relative;
+  /* background-color: #f4f4f4; */
+  padding: 2rem;
+}
+
+.contact-form-container .container {
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 2rem;
+    justify-content: space-between; */
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.contact-info,
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  /* max-width: 500px; */
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.contact-info {
+  padding: 1.5rem;
+}
+
+.contact-info-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 1rem;
+}
+
+.contact-info-item {
+  margin-bottom: 1rem;
+}
+
+.contact-info-item strong {
+  /* display: block; */
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.contact-info-item p,
+.contact-info-item a {
+  margin: 0.5rem 0;
+  color: #555;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.contact-info-item a {
+  color: black;
+}
+
+.contact-form {
+  background-color: transparent;
+  border: 1px solid white;
+  color: #ffffff;
+  padding: 1.5rem;
+}
+
+.contact-form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.contact-form-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form-field {
+  margin-bottom: 1rem;
+}
+
+.contact-form-field label {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-form-field input,
+.contact-form-field textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: rgb(0, 0, 0);
+}
+
+.contact-form-submit {
+  background-color: #ffffff;
+  color: #970000;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.contact-form-submit:hover {
+  background-color: #f0f0f0;
+}
+
+.contact-form-status {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+/* SocialIcons.css */
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icon {
+  position: relative;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.2rem;
+  transition: background-color 0.3s, transform 0.3s;
+  text-decoration: none;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.icon.facebook {
+  background-color: #3b5998;
+  /* Facebook brand color */
+}
+
+.icon.twitter {
+  background-color: #1da1f2;
+  /* Twitter brand color */
+}
+
+.icon.instagram {
+  background-color: #e4405f;
+  /* Instagram brand color */
+}
+
+.social-icon::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 0.5rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.social-icon:hover::before {
+  opacity: 1;
+}
+
+/* Banner Styling */
+.allbanners {
+  position: relative;
+  height: 35vh;
+  /* Adjust as needed */
+  overflow: hidden;
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../../public/assets/img/banner/contact.png") no-repeat center
+    center;
+  background-size: cover;
+  display: grid;
+  place-content: center;
+  z-index: 0;
+  /* Ensure it's behind the content */
+}
+
+.banner-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  /* Adjust opacity as needed */
+  z-index: 1;
+  /* Ensure overlay is on top of the background */
+}
+
+.allbannercontent h2 {
+  color: white !important;
+}
+
+.allbannercontent {
+  z-index: 9;
+  position: relative;
+}
+
+.maps-area .google-maps iframe {
+  width: 100%;
+  height: 50vh;
+  border: 0;
+}

@@ -23,7 +23,7 @@ export async function POST(req) {
   const image = formData.get("image");
   const imageByteData = await image.arrayBuffer();
   const imageBuffer = Buffer.from(imageByteData);
-  const imagePath = `./public/assets/img/products/${timeStamp}_${image.name}`;
+  const imagePath = `./assets/img/products/${timeStamp}_${image.name}`;
   await writeFile(imagePath, imageBuffer);
   const imageUrl = `/assets/img/products/${timeStamp}_${image.name}`;
 
@@ -31,7 +31,7 @@ export async function POST(req) {
   const pdf = formData.get("pdf");
   const pdfByteData = await pdf.arrayBuffer();
   const pdfBuffer = Buffer.from(pdfByteData);
-  const pdfPath = `./public/assets/img/pdf/${timeStamp}_${pdf.name}`;
+  const pdfPath = `./assets/img/pdf/${timeStamp}_${pdf.name}`;
   await writeFile(pdfPath, pdfBuffer);
   const pdfUrl = `/assets/img/pdf/${timeStamp}_${pdf.name}`;
 

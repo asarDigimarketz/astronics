@@ -24,7 +24,7 @@ export async function POST(req) {
   const buffer = Buffer.from(imageByteData);
   const path = `./public/assets/img/bannercarousel/${timeStamp}_${image.name}`;
 
-  await writeFile(path, buffer);
+ 
   const imageUrl = `/assets/img/bannercarousel/${timeStamp}_${image.name}`;
 
   const newBanner = {

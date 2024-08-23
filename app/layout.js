@@ -1,8 +1,8 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/Components/NavBar/NavBar";
-import Footer from "@/Components/Footer/Footer";
-import SessionProvider from "@/Components/SessionProvider/SessionProvider";
+import NavBar from "../Components/NavBar/NavBar.jsx";
+import Footer from "../Components/Footer/Footer.jsx";
+import SessionProvider from "../Components/SessionProvider/SessionProvider";
 
 const outfit = Outfit({
   subsets: ["latin"],

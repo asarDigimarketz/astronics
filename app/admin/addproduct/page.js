@@ -1,4 +1,4 @@
-import AddProduct from "@/Components/AddProduct/AddProduct";
+import AddProduct from "../../../Components/AddProduct/AddProduct.jsx";
 import React from "react";
 
 const page = () => {

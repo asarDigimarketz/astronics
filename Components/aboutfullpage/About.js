@@ -1,5 +1,5 @@
 import React from "react";
-import "@/components/aboutfullpage/about.css";
+import "./about.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const About = () => {

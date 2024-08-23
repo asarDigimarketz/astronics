@@ -12,7 +12,7 @@ import {
   FaDumpster,
   FaUser,
 } from "react-icons/fa";
-import styles from "./Sidebar.module.css";
+import styles from "@/Components/sidebar/SideBar.module.css";
 
 const Sidebar = () => {
   const { data: session, status } = useSession(); // Get session status

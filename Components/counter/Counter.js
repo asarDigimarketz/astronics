@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import "@/components/counter/counter.css";
+import "./counter.css";
 
 const formatNumber = (number) => {
   if (number >= 1_000_000) {

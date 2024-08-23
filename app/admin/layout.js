@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Dynamically import Sidebar to improve HMR support
-const Sidebar = dynamic(() => import("../../components/sidebar/Sidebar"), {
+const Sidebar = dynamic(() => import("@/Components/sidebar/SideBar"), {
   ssr: false,
 });
 

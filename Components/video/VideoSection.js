@@ -1,5 +1,5 @@
 import React from "react";
-import "@/components/video/video.css";
+import "./video.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const VideoSection = () => {

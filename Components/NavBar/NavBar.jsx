@@ -5,40 +5,35 @@ import { FaCaretDown, FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import "./NavBar.css";
 import { useSession, signOut } from "next-auth/react";
 import astronixlogo from "../../public/assets/logo/auxlogo.png";
+import "./NavBar.css";
+
+const adminEmails = [
+  "print5onlinestore@gmail.com",
+  "manoj@gmail.com",
+  "azar@magizhdigitalmarketing.com",
+];
 
 function NavBar() {
   const [openMenu, setOpenMenu] = useState(false);
   const [products, setProducts] = useState([]);
-  const pathname = usePathname(); // Get the current path
-  // authentication start
-  const { data: session, status } = useSession();
-  const [dropopenMenu, setdropOpenMenu] = useState(false);
+  const [dropOpenMenu, setDropOpenMenu] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const pathname = usePathname();
+  const { data: session } = useSession();
 
-  // List of admin email addresses
-  const adminEmails = [
-    "print5onlinestore@gmail.com",
-    "manoj@gmail.com",
-    "azar@magizhdigitalmarketing.com",
-  ];
-  // Check if the user is an admin
   const isAdmin =
     session?.user?.email && adminEmails.includes(session.user.email);
 
-  const handleLogout = async () => {
-    if (window.confirm("Are you sure you want to log out?")) {
-      await signOut({ redirect: false });
-      window.location.href = "/"; // Redirect to home after logout
-    }
-  };
-
   useEffect(() => {
-    // Handle menu closing on click outside or other actions
     const handleClickOutside = (event) => {
-      if (event.target.closest(".relative") === null) {
-        setdropOpenMenu(false);
+      if (
+        !event.target.closest(".dropdown") &&
+        !event.target.closest(".user-dropdown")
+      ) {
+        setDropOpenMenu(false);
+        setUserDropdownOpen(false);
       }
     };
 
@@ -47,142 +42,99 @@ function NavBar() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-  // authentication end
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`/api/products`);
-        const products = response.data;
-
-        // Filter unique categories
-        const uniqueProducts = products.reduce((acc, product) => {
+        const { data } = await axios.get(`/api/products`);
+        const uniqueProducts = data.reduce((acc, product) => {
           if (!acc.some((p) => p.category === product.category)) {
             acc.push(product);
           }
           return acc;
         }, []);
-
         setProducts(uniqueProducts);
       } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
       }
     };
 
     fetchProducts();
   }, []);
 
-  // const formatUrl = (str) => str.replace(/\s+/g, "-").toLowerCase();
-  const newformatString = (str) =>
-    str
-      .replace(/-/g, " ") // Replace all hyphens with spaces
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+  const handleLogout = async () => {
+    if (window.confirm("Are you sure you want to log out?")) {
+      await signOut({ redirect: false });
+      window.location.href = "/"; // Redirect to home after logout
+    }
+  };
+
+  const formatString = (str) =>
+    str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
   const productLinks = products.map((product) => ({
     href: `/products/${product.category}`,
-    label: newformatString(product.category),
+    label: formatString(product.category),
   }));
 
   return (
-    <header className="antialiased">
+    <header className="antialiased bg-gray-800 text-white">
       <nav>
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center justify-between flex-grow">
-              <div className="flex-shrink-0">
-                <h1 className="text-lg font-semibold tracking-widest text-white uppercase">
-                  <Link href="/" className="">
-                    <Image
-                      src={astronixlogo}
-                      width={130}
-                      height={100}
-                      alt={"astronixlogo"}
-                    />
-                  </Link>
-                </h1>
-              </div>
-              <div className="hidden lg:flex lg:items-center">
-                <NavLink href="/" label="Home" pathname={pathname} />
-                <NavLink href="/about" label="About" pathname={pathname} />
-                <NavLink
-                  href="/services"
-                  label="Services"
-                  pathname={pathname}
+            <Link href="/" className="flex-shrink-0">
+              <Image
+                src={astronixlogo}
+                width={130}
+                height={100}
+                alt="Astronix Logo"
+              />
+            </Link>
+            <div className="hidden lg:flex lg:items-center lg:space-x-4">
+              <NavLink href="/" label="Home" pathname={pathname} />
+              <NavLink href="/about" label="About" pathname={pathname} />
+              <NavLink href="/services" label="Services" pathname={pathname} />
+              <Dropdown
+                label="Products"
+                link="/products"
+                links={productLinks}
+                pathname={pathname}
+                setDropOpenMenu={setDropOpenMenu}
+              />
+              <NavLink
+                href="/contactus"
+                label="Contact Us"
+                pathname={pathname}
+              />
+              {isAdmin && (
+                <NavLink href="/admin" label="Admin" pathname={pathname} />
+              )}
+              {session?.user ? (
+                <UserDropdown
+                  session={session}
+                  handleLogout={handleLogout}
+                  dropOpenMenu={userDropdownOpen}
+                  setDropOpenMenu={setUserDropdownOpen}
                 />
-                <Dropdown
-                  label="Products"
-                  link="/products"
-                  links={productLinks}
-                  pathname={pathname}
-                />
-                <NavLink
-                  href="/contactus"
-                  label="Contact Us"
-                  pathname={pathname}
-                />
-                {isAdmin && (
-                  <NavLink
-                    href="/admin"
-                    label="Admin"
-                    pathname={pathname}
-                    className="register-btn" // Unique class for Register button
-                  />
-                )}
-                {session?.user ? (
-                  <div className="relative ml-4 z-50">
-                    <img
-                      src={session.user.image || "/user/user.jpg"} // Fallback image if user.image is not available
-                      width={25}
-                      height={25}
-                      alt="userimage"
-                      className="cursor-pointer rounded-full border border-gray-300"
-                      onClick={() => setdropOpenMenu(!dropopenMenu)}
-                    />
-                    {dropopenMenu && (
-                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                        <div className="p-2 text-gray-700">
-                          <div className="flex items-center mb-2">
-                            <img
-                              src={session.user.image || "/user/user.jpg"} // Fallback image if user.image is not available
-                              width={25}
-                              height={25}
-                              alt="userimage"
-                              className="mr-2 rounded-full border border-gray-300"
-                            />
-                            <span>{session.user.name}</span>
-                          </div>
-                          <button
-                            onClick={handleLogout}
-                            className="w-full text-white bg-gray-700 hover:text-white hover:bg-gray-500 p-2 rounded-md"
-                          >
-                            Logout
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <NavLink href="/login" label="Login" pathname={pathname} />
-                )}
-              </div>
-              <div className="flex lg:hidden">
-                <button
-                  onClick={() => setOpenMenu(!openMenu)}
-                  className="inline-flex items-center justify-center p-2 text-gray-400 bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white hover:text-white hover:bg-gray-700"
-                >
-                  <span className="sr-only">Open main menu</span>
-                  {openMenu ? (
-                    <FaTimes className="w-6 h-6" />
-                  ) : (
-                    <FaBars className="w-6 h-6" />
-                  )}
-                </button>
-              </div>
+              ) : (
+                <NavLink href="/login" label="Login" pathname={pathname} />
+              )}
             </div>
+            <button
+              onClick={() => setOpenMenu(!openMenu)}
+              className="flex lg:hidden p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              aria-label="Toggle Menu"
+            >
+              {openMenu ? (
+                <FaTimes className="w-6 h-6" aria-hidden="true" />
+              ) : (
+                <FaBars className="w-6 h-6" aria-hidden="true" />
+              )}
+            </button>
           </div>
         </div>
-
         {openMenu && (
-          <div className="block lg:hidden">
+          <div className="lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <NavLink href="/" label="Home" pathname={pathname} />
               <NavLink href="/about" label="About" pathname={pathname} />
@@ -192,53 +144,25 @@ function NavBar() {
                 link="/products"
                 links={productLinks}
                 pathname={pathname}
+                setDropOpenMenu={setDropOpenMenu}
+                mobile
               />
               <NavLink
                 href="/contactus"
                 label="Contact Us"
                 pathname={pathname}
-              />{" "}
+              />
               {isAdmin && (
-                <NavLink
-                  href="/admin"
-                  label="Admin"
-                  pathname={pathname}
-                  className="register-btn" // Unique class for Register button
-                />
+                <NavLink href="/admin" label="Admin" pathname={pathname} />
               )}
               {session?.user ? (
-                <div className="relative ml-4 z-50">
-                  <img
-                    src={session.user.image || "/user/user.jpg"} // Fallback image if user.image is not available
-                    width={25}
-                    height={25}
-                    alt="userimage"
-                    className="cursor-pointer rounded-full border border-gray-300"
-                    onClick={() => setdropOpenMenu(!dropopenMenu)}
-                  />
-                  {dropopenMenu && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                      <div className="p-2 text-gray-700">
-                        <div className="flex items-center mb-2">
-                          <img
-                            src={session.user.image || "/user/user.jpg"} // Fallback image if user.image is not available
-                            width={25}
-                            height={25}
-                            alt="userimage"
-                            className="mr-2 rounded-full border border-gray-300"
-                          />
-                          <span>{session.user.name}</span>
-                        </div>
-                        <button
-                          onClick={handleLogout}
-                          className="w-full text-white bg-gray-700 hover:text-white hover:bg-gray-500 p-2 rounded-md"
-                        >
-                          Logout
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <UserDropdown
+                  session={session}
+                  handleLogout={handleLogout}
+                  dropOpenMenu={userDropdownOpen}
+                  setDropOpenMenu={setUserDropdownOpen}
+                  mobile
+                />
               ) : (
                 <NavLink href="/login" label="Login" pathname={pathname} />
               )}
@@ -250,63 +174,109 @@ function NavBar() {
   );
 }
 
-const NavLink = ({ href, icon, label, pathname, className = "" }) => {
+const NavLink = ({ href, label, pathname, className = "" }) => {
   const isActive = pathname === href;
-
   return (
     <Link
       href={href}
-      className={`flex items-center px-3 py-2 text-sm font-medium rounded-md focus:outline-none ${
+      className={`block px-3 py-2 rounded-md text-base font-medium ${
         isActive
-          ? "text-white bg-gray-900"
-          : "text-gray-300 hover:text-white hover:bg-gray-700"
-      } ${className}`} // Added className prop here
+          ? "bg-gray-900 text-white"
+          : "text-gray-300 hover:bg-gray-700 hover:text-white"
+      } ${className}`}
+      aria-current={isActive ? "page" : undefined}
     >
-      {icon}
-      <span className="ml-2">{label}</span>
+      {label}
     </Link>
   );
 };
 
-const Dropdown = ({ label, icon, link, links, pathname }) => {
+const Dropdown = ({
+  label,
+  link,
+  links,
+  pathname,
+  setDropOpenMenu,
+  mobile = false,
+}) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const isActive = pathname.startsWith(link);
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+    setDropOpenMenu && setDropOpenMenu(!dropdownOpen);
+  };
+
   return (
-    <div
-      className="relative"
-      onMouseEnter={() => setDropdownOpen(true)}
-      onMouseLeave={() => setDropdownOpen(false)}
-    >
-      <Link
-        href={link}
-        className={`flex items-center px-3 py-2 text-sm font-medium rounded-md focus:outline-none ${
+    <div className={`relative ${mobile ? "block" : ""} dropdown`}>
+      <button
+        onClick={toggleDropdown}
+        className={`block px-3 py-2 rounded-md text-base font-medium ${
           isActive
-            ? "text-white bg-gray-900"
-            : "text-gray-300 hover:text-white hover:bg-gray-700"
+            ? "bg-gray-900 text-white"
+            : "text-gray-300 hover:bg-gray-700 hover:text-white"
         }`}
       >
-        {icon}
-        <span className="mx-2">{label}</span>
-        <FaCaretDown className="w-4 h-4 ml-1 transition-transform duration-200" />
-      </Link>
-      <div
-        className={`absolute left-0 w-48 mt-2 origin-top-left bg-white rounded-md shadow-lg cat-dropdown transition-opacity duration-300 ${
-          dropdownOpen ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {links.map((link, index) => (
-          <Link
-            href={link.href}
-            key={index}
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
-            {link.label}
-          </Link>
-        ))}
-      </div>
+        {label}
+        <FaCaretDown className="inline ml-2" aria-hidden="true" />
+      </button>
+      {dropdownOpen && (
+        <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+          {links.map((link, index) => (
+            <Link
+              href={link.href}
+              key={index}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
+
+const UserDropdown = ({
+  session,
+  handleLogout,
+  dropOpenMenu,
+  setDropOpenMenu,
+  mobile = false,
+}) => (
+  <div
+    className={`relative ${
+      mobile ? "block mt-3 user-dropdown" : "ml-4"
+    } flex-shrink-0 z-50`}
+  >
+    <img
+      src={session.user.image || "/user/user.jpg"} // Fallback image if user.image is not available
+      width={25}
+      height={25}
+      alt="user image"
+      className="cursor-pointer rounded-full border border-gray-300"
+      onClick={() => setDropOpenMenu(!dropOpenMenu)}
+      aria-haspopup="true"
+    />
+    {dropOpenMenu && (
+      <div
+        className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg transition-opacity duration-300 ${
+          dropOpenMenu ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <div className="p-2 text-gray-700">
+          <div className="font-bold">{session.user.name}</div>
+          <div className="text-sm">{session.user.email}</div>
+        </div>
+        <button
+          className="block px-4 py-2 w-full text-left text-sm text-gray-700 hover:bg-gray-100"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+    )}
+  </div>
+);
 
 export default NavBar;

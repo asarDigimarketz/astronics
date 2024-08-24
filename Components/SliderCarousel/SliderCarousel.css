@@ -105,7 +105,7 @@
   }
 
   .carousel {
-    height: 50dvh; /* Adjust carousel height on mobile */
+    height: 60dvh; /* Adjust carousel height on mobile */
   }
 
   .heading-xl {
@@ -146,7 +146,7 @@
   }
 
   .carousel {
-    height: 40vh; /* Adjust the carousel height for very small devices */
+    height: 210px; /* Adjust the carousel height for very small devices */
   }
 
   .heading-xl {
@@ -171,5 +171,46 @@
 
   .paragraph {
     font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  }
+}
+@media (max-width: 400px) {
+  .swiper-slide-overlay {
+    width: 100%; /* Full width on mobile */
+    padding: 0.5rem; /* Less padding for smaller devices */
+    text-align: center;
+  }
+
+  .swiper-slide {
+    height: auto; /* Auto height to fit the image */
+    background-size: contain; /* Contain image within slide */
+    background-position: center;
+  }
+
+  .carousel {
+    height: 170px; /* Adjust carousel height on very small mobile */
+  }
+
+  .heading-xl {
+    font-size: clamp(1.5rem, 4.5vw, 2.5rem); /* Smaller font sizes */
+  }
+
+  .heading-lg {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .heading-md {
+    font-size: clamp(1.125rem, 3.5vw, 1.75rem);
+  }
+
+  .heading-sm {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+  }
+
+  .heading-xs {
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+  }
+
+  .paragraph {
+    font-size: clamp(0.75rem, 2vw, 0.875rem); /* Smaller paragraph size */
   }
 }

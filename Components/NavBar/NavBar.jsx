@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import { usePathname } from "next/navigation";
 import { FaCaretDown, FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
@@ -15,7 +15,22 @@ const adminEmails = [
   "azar@magizhdigitalmarketing.com",
 ];
 
-function NavBar() {
+const fetchProducts = async () => {
+  try {
+    const { data } = await axios.get(`/api/products`);
+    return data.reduce((acc, product) => {
+      if (!acc.some((p) => p.category === product.category)) {
+        acc.push(product);
+      }
+      return acc;
+    }, []);
+  } catch (err) {
+    console.error("Failed to fetch products:", err.message);
+    return [];
+  }
+};
+
+const NavBar = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [products, setProducts] = useState([]);
   const [dropOpenMenu, setDropOpenMenu] = useState(false);
@@ -25,6 +40,15 @@ function NavBar() {
 
   const isAdmin =
     session?.user?.email && adminEmails.includes(session.user.email);
+
+  const fetchProductsCallback = useCallback(async () => {
+    const uniqueProducts = await fetchProducts();
+    setProducts(uniqueProducts);
+  }, []);
+
+  useEffect(() => {
+    fetchProductsCallback();
+  }, [fetchProductsCallback]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -41,25 +65,6 @@ function NavBar() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data } = await axios.get(`/api/products`);
-        const uniqueProducts = data.reduce((acc, product) => {
-          if (!acc.some((p) => p.category === product.category)) {
-            acc.push(product);
-          }
-          return acc;
-        }, []);
-        setProducts(uniqueProducts);
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-
-    fetchProducts();
   }, []);
 
   const handleLogout = async () => {
@@ -94,13 +99,14 @@ function NavBar() {
               <NavLink href="/" label="Home" pathname={pathname} />
               <NavLink href="/about" label="About" pathname={pathname} />
               <NavLink href="/services" label="Services" pathname={pathname} />
-              <Dropdown
-                label="Products"
-                link="/products"
-                links={productLinks}
-                pathname={pathname}
-                setDropOpenMenu={setDropOpenMenu}
-              />
+              <Link href="/products" passHref>
+                <Dropdown
+                  label="Products"
+                  links={productLinks}
+                  pathname={pathname}
+                  setDropOpenMenu={setDropOpenMenu}
+                />
+              </Link>
               <NavLink
                 href="/contactus"
                 label="Contact Us"
@@ -172,9 +178,9 @@ function NavBar() {
       </nav>
     </header>
   );
-}
+};
 
-const NavLink = ({ href, label, pathname, className = "" }) => {
+const NavLink = memo(({ href, label, pathname, className = "" }) => {
   const isActive = pathname === href;
   return (
     <Link
@@ -189,94 +195,98 @@ const NavLink = ({ href, label, pathname, className = "" }) => {
       {label}
     </Link>
   );
-};
+});
 
-const Dropdown = ({
-  label,
-  link,
-  links,
-  pathname,
-  setDropOpenMenu,
-  mobile = false,
-}) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const isActive = pathname.startsWith(link);
+const Dropdown = memo(
+  ({ label, links, pathname, setDropOpenMenu, mobile = false }) => {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const isActive = pathname.startsWith("/products");
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-    setDropOpenMenu && setDropOpenMenu(!dropdownOpen);
-  };
+    const toggleDropdown = () => {
+      setDropdownOpen((prev) => !prev);
+      setDropOpenMenu && setDropOpenMenu((prev) => !prev);
+    };
 
-  return (
-    <div className={`relative ${mobile ? "block" : ""} dropdown`}>
-      <button
-        onClick={toggleDropdown}
-        className={`block px-3 py-2 rounded-md text-base font-medium ${
-          isActive
-            ? "bg-gray-900 text-white"
-            : "text-gray-300 hover:bg-gray-700 hover:text-white"
-        }`}
+    return (
+      <div
+        className={`relative ${mobile ? "block" : ""} dropdown`}
+        onMouseEnter={() => !mobile && setDropdownOpen(true)}
+        onMouseLeave={() => !mobile && setDropdownOpen(false)}
       >
-        {label}
-        <FaCaretDown className="inline ml-2" aria-hidden="true" />
-      </button>
-      {dropdownOpen && (
-        <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-          {links.map((link, index) => (
-            <Link
-              href={link.href}
-              key={index}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <button
+          onClick={toggleDropdown}
+          className={`block px-3 py-2 rounded-md text-base font-medium ${
+            isActive
+              ? "bg-gray-900 text-white"
+              : "text-gray-300 hover:bg-gray-700 hover:text-white"
+          }`}
+          aria-haspopup="true"
+          aria-expanded={dropdownOpen}
+        >
+          {label}
+          <FaCaretDown className="inline ml-2" aria-hidden="true" />
+        </button>
+        {dropdownOpen && (
+          <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+            {links.map((link, index) => (
+              <Link
+                href={link.href}
+                key={index}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+);
+
+const UserDropdown = memo(
+  ({
+    session,
+    handleLogout,
+    dropOpenMenu,
+    setDropOpenMenu,
+    mobile = false,
+  }) => (
+    <div
+      className={`relative ${
+        mobile ? "block mt-3 user-dropdown" : "ml-4"
+      } flex-shrink-0 z-50`}
+    >
+      <img
+        src={session.user.image || "/user/user.jpg"}
+        width={25}
+        height={25}
+        alt="user image"
+        className="cursor-pointer rounded-full border border-gray-300"
+        onClick={() => setDropOpenMenu(!dropOpenMenu)}
+        aria-haspopup="true"
+        aria-expanded={dropOpenMenu}
+      />
+      {dropOpenMenu && (
+        <div
+          className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg transition-opacity duration-300 ${
+            dropOpenMenu ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="p-2 text-gray-700">
+            <div className="font-bold">{session.user.name}</div>
+            <div className="text-sm">{session.user.email}</div>
+          </div>
+          <button
+            className="block px-4 py-2 w-full text-left text-sm text-gray-700 hover:bg-gray-100"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       )}
     </div>
-  );
-};
-
-const UserDropdown = ({
-  session,
-  handleLogout,
-  dropOpenMenu,
-  setDropOpenMenu,
-  mobile = false,
-}) => (
-  <div
-    className={`relative ${
-      mobile ? "block mt-3 user-dropdown" : "ml-4"
-    } flex-shrink-0 z-50`}
-  >
-    <img
-      src={session.user.image || "/user/user.jpg"} // Fallback image if user.image is not available
-      width={25}
-      height={25}
-      alt="user image"
-      className="cursor-pointer rounded-full border border-gray-300"
-      onClick={() => setDropOpenMenu(!dropOpenMenu)}
-      aria-haspopup="true"
-    />
-    {dropOpenMenu && (
-      <div
-        className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg transition-opacity duration-300 ${
-          dropOpenMenu ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <div className="p-2 text-gray-700">
-          <div className="font-bold">{session.user.name}</div>
-          <div className="text-sm">{session.user.email}</div>
-        </div>
-        <button
-          className="block px-4 py-2 w-full text-left text-sm text-gray-700 hover:bg-gray-100"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      </div>
-    )}
-  </div>
+  )
 );
 
 export default NavBar;

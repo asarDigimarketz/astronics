@@ -80,13 +80,13 @@ const Category = () => {
                   centeredSlides: false,
                 },
                 1200: {
-                  slidesPerView: 4,
+                  slidesPerView: 3,
                   spaceBetween: 30,
                   centeredSlides: false,
                   loop: false,
                 },
                 1600: {
-                  slidesPerView: 6,
+                  slidesPerView: 3,
                   spaceBetween: 30,
                   centeredSlides: false,
                   loop: false,

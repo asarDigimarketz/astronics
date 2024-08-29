@@ -1,24 +1,30 @@
 import React from "react";
+import Link from "next/link";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { FaPhoneAlt, FaMailBulk } from "react-icons/fa";
 
 const Footer = () => {
-  const date = new Date();
+  const year = new Date().getFullYear();
   return (
     <footer className=" footerset  bg-color--1">
       <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div className="text-teal-600">
-            <img
-              src="/assets/logo/auxlogo.png"
-              alt=""
-              width={130}
-              height={130}
-            />
+            <Link href="/">
+              <img
+                src="/assets/logo/auxlogo.png"
+                alt=""
+                width={130}
+                height={130}
+              />
+            </Link>
           </div>
 
           <ul className="mt-8 flex justify-start gap-6 sm:mt-0 sm:justify-end">
             <li>
               <a
-                href="#"
+                href="https://www.facebook.com/vutelevision.madurai"
                 rel="noreferrer"
                 target="_blank"
                 className="text-white transition hover:opacity-75"
@@ -42,7 +48,7 @@ const Footer = () => {
 
             <li>
               <a
-                href="#"
+                href="https://www.instagram.com/auxtronics/"
                 rel="noreferrer"
                 target="_blank"
                 className="text-white transition hover:opacity-75"
@@ -66,7 +72,7 @@ const Footer = () => {
 
             <li>
               <a
-                href="#"
+                href="https://twitter.com/VUTVstore"
                 rel="noreferrer"
                 target="_blank"
                 className="text-white transition hover:opacity-75"
@@ -75,16 +81,54 @@ const Footer = () => {
 
                 <svg
                   className="h-6 w-6"
+                  viewBox="0 0 2088 2088"
                   fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                  <g clipPath="url(#clip0_4141_1253)">
+                    <path
+                      d="M801.638 437.02L1638.05 1650.52H1286.14L450.129 436.398L801.638 437.02ZM602.638 516.02L1329.72 1572.84H1487.77L759.638 516.02H602.638Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M449.949 1651.98H551.562L1013.75 1113.57L968.523 1047.84L449.949 1651.98Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M1101.21 1011.78L1055.9 946.025L1495.64 436.02L1595.93 436.312L1101.21 1011.78Z"
+                      fill="white"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_4141_1253">
+                      <rect width="2088" height="2088" fill="white" />
+                    </clipPath>
+                  </defs>
                 </svg>
               </a>
             </li>
 
             <li>
+              <a
+                href="https://www.youtube.com/@VuTelevisionsOfficial" // Replace with your actual YouTube channel link
+                rel="noreferrer"
+                target="_blank"
+                className="text-white transition hover:opacity-75"
+              >
+                <span className="sr-only">YouTube</span>
+
+                <svg
+                  className="h-6 w-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M23.498 6.186a2.978 2.978 0 00-2.096-2.11C19.626 3.5 12 3.5 12 3.5s-7.626 0-9.402.576a2.978 2.978 0 00-2.096 2.11A31.384 31.384 0 000 12a31.384 31.384 0 00.502 5.814 2.978 2.978 0 002.096 2.11C4.374 20.5 12 20.5 12 20.5s7.626 0 9.402-.576a2.978 2.978 0 002.096-2.11A31.384 31.384 0 0024 12a31.384 31.384 0 00-.502-5.814zM9.75 15.02V8.98l6.5 3.02-6.5 3.02z" />
+                </svg>
+              </a>
+            </li>
+
+            {/* <li>
               <a
                 href="#"
                 rel="noreferrer"
@@ -106,9 +150,9 @@ const Footer = () => {
                   />
                 </svg>
               </a>
-            </li>
+            </li> */}
 
-            <li>
+            {/* <li>
               <a
                 href="#"
                 rel="noreferrer"
@@ -130,143 +174,210 @@ const Footer = () => {
                   />
                 </svg>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
 
         <div className="grid grid-cols-1 gap-8 border-t border-gray-100 pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:pt-16">
           <div>
-            <p className="font-medium text-white">Services</p>
+            <p className="font-medium text-white">Quick Links</p>
 
             <ul className="mt-6 p-0 space-y-4 text-sm">
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="/"
+                  className="text-white transition hover:opacity-75"
+                >
                   {" "}
-                  1on1 Coaching{" "}
-                </a>
+                  Home{" "}
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
-                  {" "}
-                  Company Review{" "}
-                </a>
-              </li>
-
-              <li>
-                <a href="#" className="text-white transition hover:opacity-75">
-                  {" "}
-                  Accounts Review{" "}
-                </a>
-              </li>
-
-              <li>
-                <a href="#" className="text-white transition hover:opacity-75">
-                  {" "}
-                  HR Consulting{" "}
-                </a>
-              </li>
-
-              <li>
-                <a href="#" className="text-white transition hover:opacity-75">
-                  {" "}
-                  SEO Optimisation{" "}
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-medium text-white">Company</p>
-
-            <ul className="mt-6 p-0 space-y-4 text-sm">
-              <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="/about"
+                  className="text-white transition hover:opacity-75"
+                >
                   {" "}
                   About{" "}
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="/services"
+                  className="text-white transition hover:opacity-75"
+                >
                   {" "}
-                  Meet the Team{" "}
-                </a>
+                  Services{" "}
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="/hometheatre"
+                  className="text-white transition hover:opacity-75"
+                >
                   {" "}
-                  Accounts Review{" "}
-                </a>
+                  Home Theatre{" "}
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/brand"
+                  className="text-white transition hover:opacity-75"
+                >
+                  {" "}
+                  Brand{" "}
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/products"
+                  className="text-white transition hover:opacity-75"
+                >
+                  {" "}
+                  Products{" "}
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/contactus"
+                  className="text-white transition hover:opacity-75"
+                >
+                  {" "}
+                  Contact Us{" "}
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <p className="font-medium text-white">Helpful Links</p>
+            <p className="font-medium text-white">ShowRoom</p>
 
             <ul className="mt-6 p-0 space-y-4 text-sm">
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
-                  {" "}
-                  Contact{" "}
-                </a>
+                <p className="text-white">
+                  Address: 161, 3rd North Cross, Annanagar, Near Shenbagam
+                  Hospitals, Madurai - 625020. Tamilnadu
+                </p>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="tel:0452 - 4376744"
+                  className="text-white transition hover:opacity-75 d-flex"
+                >
                   {" "}
-                  FAQs{" "}
-                </a>
+                  <FaPhoneAlt /> &nbsp; 0452 - 4376744{" "}
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="tel:+91 99444 84844"
+                  className="text-white transition hover:opacity-75 d-flex"
+                >
                   {" "}
-                  Live Chat{" "}
-                </a>
+                  <FaPhoneAlt /> &nbsp; +91 99444 84844,{" "}
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="tel:+91 73395 66681"
+                  className="text-white transition hover:opacity-75 d-flex"
+                >
+                  {" "}
+                  <FaPhoneAlt /> &nbsp;+91 73395 66681, 82, 83{" "}
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="mailto: auxtronics@gmail.com"
+                  className="text-white transition hover:opacity-75 d-flex"
+                >
+                  {" "}
+                  <FaMailBulk /> &nbsp; auxtronics@gmail.com{" "}
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <p className="font-medium text-white">Legal</p>
+            <p className="font-medium text-white">ShowRoom</p>
 
             <ul className="mt-6 p-0 space-y-4 text-sm">
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
-                  {" "}
-                  Accessibility{" "}
-                </a>
+                <p className="text-white">
+                  Address: 7-A, Gughan Hospital Building, 80 Feet Road, R M
+                  Colony, (Opp. to Bus stop), Dindigul - 624001. Tamilnadu
+                </p>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="tel:+91 70944 46112"
+                  className="text-white transition hover:opacity-75 d-flex"
+                >
                   {" "}
-                  Returns Policy{" "}
-                </a>
+                  <FaPhoneAlt /> &nbsp; +91 70944 46112{" "}
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="tel:+91 96556 90008"
+                  className="text-white transition hover:opacity-75 d-flex"
+                >
                   {" "}
-                  Refund Policy{" "}
-                </a>
+                  <FaPhoneAlt /> &nbsp; +91 96556 90008{" "}
+                </Link>
               </li>
 
               <li>
-                <a href="#" className="text-white transition hover:opacity-75">
+                <Link
+                  href="mailto:auxdgl@gmail.com"
+                  className="text-white transition hover:opacity-75 d-flex"
+                >
                   {" "}
-                  Hiring Statistics{" "}
-                </a>
+                  <FaMailBulk /> &nbsp; auxdgl@gmail.com{" "}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-medium text-white">About</p>
+
+            <ul className="mt-6 p-0 space-y-4 text-sm">
+              <li>
+                <p className="text-white text-justify w-60  ">
+                  Auxtronics is an "Vu Televisions" Exclusive Brand Showroom and
+                  Distributor and Authorised dealer for "Yamaha Home Theater
+                  Systems" deals with High Definition, Full HD LED, Premium
+                  Smart, Ultra HD 4K, UHD HDR, Curved, QLED, OLED, 3D,
+                  Corporate, and Office Televisions. Touch Screen, Professional
+                  Displays, Video Walls, Digital Signages, Telepresence.
+                </p>
               </li>
             </ul>
           </div>
         </div>
 
         <p className="text-xs text-white">
-          &copy; {date.getFullYear()}. Company Name. All rights reserved.
+          &copy; {year}. Auxtronics. All rights reserved.{" "}
+          <Link
+            href="https://magizhdigitalmarketing.com/"
+            target="_blank"
+            className="text-white"
+          >
+            Magizh Digital Marketing Solution
+          </Link>
         </p>
       </div>
     </footer>

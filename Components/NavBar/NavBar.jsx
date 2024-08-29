@@ -99,6 +99,12 @@ const NavBar = () => {
               <NavLink href="/" label="Home" pathname={pathname} />
               <NavLink href="/about" label="About" pathname={pathname} />
               <NavLink href="/services" label="Services" pathname={pathname} />
+
+              <NavLink
+                href="/hometheatre"
+                label="Home Theatre"
+                pathname={pathname}
+              />
               <Link href="/products" passHref>
                 <Dropdown
                   label="Products"
@@ -107,6 +113,8 @@ const NavBar = () => {
                   setDropOpenMenu={setDropOpenMenu}
                 />
               </Link>
+
+              <NavLink href="/brand" label="Brand" pathname={pathname} />
               <NavLink
                 href="/contactus"
                 label="Contact Us"
